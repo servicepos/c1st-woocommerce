@@ -8,7 +8,7 @@
  * @package           C1st
  *
  * @wordpress-plugin
- * Plugin Name:       Customers-1st
+ * Plugin Name:       Customers 1st
  * Description:       Customers 1st woocommerce integration
  * Version:           1.0.0
  * Author:            C1 ST ApS <info@c1st.com>
