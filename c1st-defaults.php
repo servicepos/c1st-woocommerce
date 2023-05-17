@@ -21,22 +21,32 @@
 
 
 if ( ! defined( 'WPINC' ) ) {
-    die;
+	die;
 }
 
-require __DIR__.'/vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
 
+// Never duplicate gtin/barcode when duplicating products
+function c1st_exclude_barcode_meta_fields( $excluded_meta ) {
+	$excluded_meta[] = "_gtin";
+	$excluded_meta[] = "hwp_product_gtin";
+	$excluded_meta[] = "hwp_var_gtin";
 
-
-function null_barcode_for_duplicated_product($newId, $oldproduct) {
-    c1st_log(json_encode([$newId, $oldproduct]));
+	return $excluded_meta;
 }
 
-function c1st_log($message) {
-    $log_file = WP_CONTENT_DIR . '/c1st-defaults.log';
-    $formatted_message = '[' . date('Y-m-d H:i:s') . '] ' . $message . "\n";
-    file_put_contents($log_file, $formatted_message, FILE_APPEND);
+// Supress webhooks for REST api request where HTTP_HTTP_X_SUPPRESS_HOOKS header is present
+function c1st_rest_api_suppress_woo_webhook( $should_deliver, $webhookObject, $arg ) {
+	// Is this a REST request?
+	if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
+		//if suppress header exists
+		if ( isset( $_SERVER['HTTP_HTTP_X_SUPPRESS_HOOKS'] ) || isset( $_SERVER['HTTP_X_SUPPRESS_HOOKS'] ) ) {
+			$should_deliver = false;
+		}
+	}
+
+	return $should_deliver;
 }
 
-
-add_action('woocommerce_duplicate_product', 'null_barcode_for_duplicated_product', 10, 2);
+add_filter( 'woocommerce_webhook_should_deliver', 'c1st_rest_api_suppress_woo_webhook', 10, 3 );
+add_filter( 'woocommerce_duplicate_product_exclude_meta', 'c1st_exclude_barcode_meta_fields' );
