@@ -24,9 +24,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-require __DIR__ . '/vendor/autoload.php';
-
-// Never duplicate gtin/barcode when duplicating products
+// Never duplicate gtin/barcode when duplicating products. Deplucate barcodes are not allowed in C1ST
 function c1st_exclude_barcode_meta_fields( $excluded_meta ) {
 	$excluded_meta[] = "_gtin";
 	$excluded_meta[] = "hwp_product_gtin";
@@ -52,7 +50,8 @@ function c1st_rest_api_suppress_woo_webhook( $should_deliver, $webhookObject, $a
 add_filter( 'woocommerce_webhook_should_deliver', 'c1st_rest_api_suppress_woo_webhook', 10, 3 );
 
 
-// Prevent duplicated from showing up instantly
+// Prevent duplicated from syncing by nulling sku
+// Sync will happen when users specifies SKU after duplication
 function c1st_nullify_duplicate_product_sku($duplicate, $product) {
 	// Set the SKU of the duplicated product to empty string
 	$duplicate->set_sku('');
