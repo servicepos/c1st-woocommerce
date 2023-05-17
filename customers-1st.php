@@ -34,6 +34,7 @@ function c1st_exclude_barcode_meta_fields( $excluded_meta ) {
 
 	return $excluded_meta;
 }
+add_filter( 'woocommerce_duplicate_product_exclude_meta', 'c1st_exclude_barcode_meta_fields' );
 
 // Suppress webhooks for REST api request where HTTP_HTTP_X_SUPPRESS_HOOKS header is present
 // IT Stack <3
@@ -48,6 +49,14 @@ function c1st_rest_api_suppress_woo_webhook( $should_deliver, $webhookObject, $a
 
 	return $should_deliver;
 }
-
 add_filter( 'woocommerce_webhook_should_deliver', 'c1st_rest_api_suppress_woo_webhook', 10, 3 );
-add_filter( 'woocommerce_duplicate_product_exclude_meta', 'c1st_exclude_barcode_meta_fields' );
+
+
+// Prevent duplicated from showing up instantly
+function c1st_nullify_duplicate_product_sku($duplicate, $product) {
+	// Set the SKU of the duplicated product to empty string
+	$duplicate->set_sku('');
+
+	return $duplicate;
+}
+add_filter('woocommerce_product_duplicate_before_save', 'c1st_nullify_duplicate_product_sku', 10, 2);
