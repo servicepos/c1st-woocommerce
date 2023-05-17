@@ -8,10 +8,10 @@
  * @package           C1st
  *
  * @wordpress-plugin
- * Plugin Name:       C1st Defaults
- * Description:       Customers 1st sane defaults for woocommerce integration
+ * Plugin Name:       Customers-1st
+ * Description:       Customers 1st woocommerce integration
  * Version:           1.0.0
- * Author:            C1 ST ApS
+ * Author:            C1 ST ApS <info@c1st.com>
  * Author URI:        https://c1st.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
