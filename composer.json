@@ -1,0 +1,16 @@
+{
+    "name": "c1st/c1st-defaults",
+    "type": "library",
+    "license": "GPL",
+    "autoload": {
+        "psr-4": {
+            "C1st\\C1stDefaults\\": "/"
+        }
+    },
+    "authors": [
+        {
+            "name": "C 1ST ApS"
+        }
+    ],
+    "require": {}
+}
