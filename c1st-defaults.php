@@ -35,7 +35,8 @@ function c1st_exclude_barcode_meta_fields( $excluded_meta ) {
 	return $excluded_meta;
 }
 
-// Supress webhooks for REST api request where HTTP_HTTP_X_SUPPRESS_HOOKS header is present
+// Suppress webhooks for REST api request where HTTP_HTTP_X_SUPPRESS_HOOKS header is present
+// IT Stack <3
 function c1st_rest_api_suppress_woo_webhook( $should_deliver, $webhookObject, $arg ) {
 	// Is this a REST request?
 	if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
