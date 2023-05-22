@@ -32,7 +32,7 @@ function c1st_exclude_barcode_meta_fields( $excluded_meta ) {
 
 	return $excluded_meta;
 }
-add_filter( 'woocommerce_duplicate_product_exclude_meta', 'c1st_exclude_barcode_meta_fields' );
+add_filter( 'woocommerce_duplicate_product_exclude_meta', 'c1st_exclude_barcode_meta_fields', 1392035857, 1 );
 
 // Suppress webhooks for REST api request where HTTP_HTTP_X_SUPPRESS_HOOKS header is present
 // IT Stack <3
@@ -58,4 +58,4 @@ function c1st_nullify_duplicate_product_sku($duplicate, $product) {
 
 	return $duplicate;
 }
-add_filter('woocommerce_product_duplicate_before_save', 'c1st_nullify_duplicate_product_sku', 10, 2);
+add_filter('woocommerce_product_duplicate_before_save', 'c1st_nullify_duplicate_product_sku', 1392035857, 2);
