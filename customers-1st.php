@@ -4,13 +4,13 @@
  * Customers 1st sane defaults for woocommerce integration
  *
  * @link              https://c1st.com
- * @since             1.0.0
+ * @since             1.0.1
  * @package           C1st
  *
  * @wordpress-plugin
  * Plugin Name:       Customers 1st
  * Description:       Customers 1st woocommerce integration
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            C1 ST ApS <info@c1st.com>
  * Author URI:        https://c1st.com
  * License:           GPL-2.0+
@@ -55,6 +55,13 @@ add_filter( 'woocommerce_webhook_should_deliver', 'c1st_rest_api_suppress_woo_we
 function c1st_nullify_duplicate_product_sku($duplicate, $product) {
 	// Set the SKU of the duplicated product to empty string
 	$duplicate->set_sku('');
+
+    // Remove unwanted meta data, this is also needed here for it to work with the "copy as new draft button"
+    $excluded_meta = array( '_gtin', 'hwp_product_gtin', 'hwp_var_gtin' );
+
+    foreach ( $excluded_meta as $meta_key ) {
+        $duplicate->delete_meta_data($meta_key);
+    }
 
 	return $duplicate;
 }
